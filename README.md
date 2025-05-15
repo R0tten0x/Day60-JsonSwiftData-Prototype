@@ -5,8 +5,7 @@ it's not pretty but whatever! Time taken to complete a couple of hours i got hun
 
 Day 61's challenge integrate swiftData, did so, added some logic to remove duplicates, a progressview, if statements if the user list is empty, a refresh button to load and save the data. Time taken 28 minutes to implement into the current code. 
 
-
-![Screenshot 2025-05-15 at 9 29 47 AM](https://github.com/user-attachments/assets/a9017283-6a2a-4f43-ac13-f14053b7f6a7)
+![Screenshot 2025-05-15 at 9 46 43 AM](https://github.com/user-attachments/assets/f1c43afe-5a0c-4fa9-9bde-973c0cdab7cf)
 
 
 <img width="456" alt="Screenshot 2025-05-14 at 7 59 11 PM" src="https://github.com/user-attachments/assets/3da51520-f85e-4426-b10f-adc44f188c77" />
