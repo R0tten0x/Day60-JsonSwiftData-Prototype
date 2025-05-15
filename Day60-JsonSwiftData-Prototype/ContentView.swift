@@ -116,7 +116,7 @@ struct ContentView: View {
                 DispatchQueue.main.async {
                     self.uData = users
                     
-                    // IMPORTANT: Delete all existing data first
+                    //  Deleting all existing data first
                     do {
                         try self.deleteAllExistingData()
                     } catch {
