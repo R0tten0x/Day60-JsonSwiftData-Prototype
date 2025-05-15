@@ -1,9 +1,4 @@
-//
-//  data.swift
-//  Day60-JsonSwiftData
-//
-//  Created by Robert Estrada on 5/14/25.
-//
+
 
 import Foundation
 import SwiftUI
