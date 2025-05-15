@@ -30,7 +30,11 @@ struct FriendData: Codable, Identifiable {
 
 
 struct ContentView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Query(sort: \UserModel.name) var usersData: [UserModel]
     @State private var uData: [UserData] = []
+    
+
 
     var body: some View {
         
@@ -54,7 +58,11 @@ struct ContentView: View {
                 }
                 .navigationTitle("Current Users")
                 .navigationBarTitleDisplayMode(.inline)
-                .onAppear(perform: fetchData)
+                .onAppear {
+                    if uData.isEmpty {
+                        fetchData()
+                    }
+                }
             }
         }
       
@@ -68,27 +76,50 @@ struct ContentView: View {
         
         let session = URLSession(configuration: .default)
         session.dataTask(with: url) { data, _, error in
-            
             let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .iso8601 // <-- use when weird date formattting.
-
+            decoder.dateDecodingStrategy = .iso8601
             
             do {
                 if let data = data {
                     let users = try decoder.decode([UserData].self, from: data)
                     print(users)
+                    
                     DispatchQueue.main.async {
                         self.uData = users
+                        
+                        for user in users {
+                            let friendModels = user.friends.map { FriendModel(id: $0.id, name: $0.name) }
+                            
+                            let userModel = UserModel(
+                                id: user.id,
+                                isActive: user.isActive,
+                                name: user.name,
+                                age: user.age,
+                                company: user.company,
+                                email: user.email,
+                                address: user.address,
+                                about: user.about,
+                                registered: user.registered,
+                                tags: user.tags,
+                                friends: friendModels
+                            )
+
+                            
+                            modelContext.insert(userModel)
+                        }
                     }
                 }
             } catch {
                 print("Failed to decode: \(error)")
             }
-        }
-        .resume()
+        }.resume()
     }
+    
+   
+
 }
 
 #Preview {
     ContentView()
+        .modelContainer(for: [UserModel.self, FriendModel.self])
 }
