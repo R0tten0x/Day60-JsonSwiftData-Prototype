@@ -29,47 +29,34 @@ struct DetailView: View {
                             .font(.title)
                             .fontWeight(.black)
                         Divider()
-                        Text("About")
-                            .font(.headline)
-                        Text(user.about)
+                            .frame(height: 2)
+                            .background(Color.gray)
+                        Text("**About:** \(user.about)")
                         Divider()
 
-                        Text("Age")
-                            .font(.headline)
-                        Text("\(user.age) years old")
+                        Text("**Age:** \(user.age)")
                         Divider()
 
-                        Text("Address")
-                            .font(.headline)
-                        Text("\(user.address)")
+                        Text("**Address:** \(user.address)")
                         Divider()
 
-                        
-                        
-                        Text("Email")
-                            .font(.headline)
-                        Text("\(user.email)")
+                        Text("**Email:** \(user.email)")
                         Divider()
 
                         
-                        Text("Registered")
-                            .font(.headline)
-                        Text("\(user.registered)")
+                        Text("**Registered:** \(user.registered)")
                         Divider()
 
                         
-                        Text("Company")
-                            .font(.headline)
-                        Text("\(user.company)")
+                        Text("**Company:** \(user.company)")
                         Divider()
 
                         
-                        Text("Friends")
-                            .font(.headline)
+                        Text("**Friends:**")
+                            
                         ForEach(user.friends) { friend in
                             Text(friend.name)
                         }
-                        
                     }
                     .padding(10)
                     
@@ -84,7 +71,7 @@ struct DetailView: View {
                 .padding(5)
                 .toolbar {
                     Text("\(user.isActive ? "Active" : "Inactive")")
-                        .foregroundColor(user.isActive ?? false ? .green : .red)
+                        .foregroundColor(user.isActive ? .green : .red)
                         .fontWeight(.black)
                 }
                 

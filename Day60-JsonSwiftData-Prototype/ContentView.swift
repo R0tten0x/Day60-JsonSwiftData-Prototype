@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct UserData: Codable, Identifiable {
     var id: UUID
@@ -44,7 +45,7 @@ struct ContentView: View {
                                 Text(user.name)
                                     .font(.headline)
                                 Text("\(user.isActive ? "Active" : "Inactive")")
-                                    .foregroundColor(user.isActive ?? false ? .green : .red)
+                                    .foregroundColor(user.isActive ? .green : .red)
                                     .font(.caption)
                                     
                             }
