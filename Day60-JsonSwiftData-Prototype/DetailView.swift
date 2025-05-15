@@ -24,9 +24,10 @@ struct DetailView: View {
                     Spacer()
                     VStack(alignment: .leading, spacing: 20) {
                         
-                        Text("Name")
-                            .font(.headline)
+                        
                         Text(user.name)
+                            .font(.title)
+                            .fontWeight(.black)
                         Divider()
                         Text("About")
                             .font(.headline)
