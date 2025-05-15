@@ -1,7 +1,7 @@
 Day 60 of 100 days of swift. 
 
 Day 60's challenge on 100 day's of swift. Fetching Data from Json, loading data, viewable. Detailview's a little fucky just wanted to test out a little card looking vstack 
-it's not pretty but whatever! Time taken to complete a couple of hours i got hung up on the .appear {FetchData()} and .resume() Added a few error catching in the do blocks, 
+it's not pretty but whatever! Time taken to complete, about an hour. i got hung up on the .appear {FetchData()} and .resume() Added a few error catching in the do blocks, 
 
 Day 61's challenge integrate swiftData, did so, added some logic to remove duplicates, a progressview, if statements if the user list is empty, a refresh button to load and save the data. Time taken 28 minutes to implement into the current code. 
 
