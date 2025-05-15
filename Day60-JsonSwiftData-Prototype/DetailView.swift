@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DetailView: View {
-    let user: UserData
+    let user: UserModel
     @State private var isOn: Bool?
     let mockFriends = [
         FriendData(id: UUID(), name: "Taylor"),
@@ -31,6 +31,7 @@ struct DetailView: View {
                         Divider()
                             .frame(height: 2)
                             .background(Color.gray)
+                        
                         Text("**About:** \(user.about)")
                         Divider()
 
@@ -90,21 +91,23 @@ struct DetailView: View {
     
 }
 
+
 #Preview {
-    DetailView(user: UserData(
-        id: UUID(),
-        isActive: true,
-        name: "Preview User",
-        age: 30,
-        company: "Preview Corp",
-        email: "preview@example.com",
-        address: "123 Preview Lane",
-        about: "This is a mock user for previews.",
-        registered: Date(),
-        tags: ["Swift", "UI"],
-        friends: [
-            FriendData(id: UUID(), name: "Jane Doe"),
-            FriendData(id: UUID(), name: "John Smith")
-        ]
-    ))
-}
+        let mockFriend = FriendModel(id: UUID(), name: "Jane Doe")
+        let mockUser = UserModel(
+            id: UUID(),
+            isActive: true,
+            name: "Mock User",
+            age: 35,
+            company: "Mock Corp",
+            email: "mock@example.com",
+            address: "123 Mock St",
+            about: "This is a mock about section.",
+            registered: Date(),
+            tags: ["Sample", "Test"],
+            friends: [mockFriend]
+        )
+        
+        return DetailView(user: mockUser)
+            .modelContainer(for: [UserModel.self, FriendModel.self])
+    }

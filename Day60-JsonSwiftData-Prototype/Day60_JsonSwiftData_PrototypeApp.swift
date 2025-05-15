@@ -13,5 +13,6 @@ struct Day60_JsonSwiftData_PrototypeApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: [UserModel.self, FriendModel.self])
     }
 }
