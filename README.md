@@ -1,8 +1,9 @@
 Day 60 of 100 days of swift. 
 
-Goal: Fetch data, create structs, show data, navigation links, detail views of each user. Added a little twist changing inactive active property green and red. 
-Time taken to code this: 2 Hours. A few hiccups on .onAppear(fetchData) and .resume() also forgot to add the iso8601 decoder. the iso8601 took me ages to figure out, all the views were 
-empty because of it. 
+Day 60's challenge on 100 day's of swift. Fetching Data from Json, loading data, viewable. Detailview's a little fucky just wanted to test out a little card looking vstack 
+it's not pretty but whatever! Time taken to complete a couple of hours i got hung up on the .appear {FetchData()} and .resume() Added a few error catching in the do blocks, 
+
+Day 61's challenge integrate swiftData, did so, added some logic to remove duplicates, a progressview, if statements if the user list is empty, a refresh button to load and save the data. Time taken 28 minutes to implement into the current code. 
 
 
 ![Screenshot 2025-05-15 at 9 29 47 AM](https://github.com/user-attachments/assets/a9017283-6a2a-4f43-ac13-f14053b7f6a7)
