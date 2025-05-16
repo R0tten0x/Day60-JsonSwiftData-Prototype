@@ -117,7 +117,7 @@ struct ContentView: View {
                         print("Failed to delete existing data: \(error.localizedDescription)")
                     }
 
-                    // Now add new data
+                    // Adding new data
                     for user in users {
                         let friendModels = user.friends.map { FriendModel(id: $0.id, name: $0.name) }
 
