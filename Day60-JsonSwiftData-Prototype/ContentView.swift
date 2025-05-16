@@ -1,7 +1,6 @@
 
-
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct UserData: Codable, Identifiable {
     var id: UUID
@@ -22,73 +21,66 @@ struct FriendData: Codable, Identifiable {
     var name: String
 }
 
-
-
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \UserModel.name) var usersData: [UserModel]
     @State private var uData: [UserData] = []
     @State private var isLoading = false
-    
-
 
     var body: some View {
-        
-        
         NavigationStack {
-                VStack {
-                    
-                    if isLoading {
-                                       ProgressView("Loading users...")
-                                   } else if usersData.isEmpty {
-                                       Text("No Users Loaded Yet")
-                                           .foregroundColor(.gray)
-                                   } else {
-                                       List(usersData) { user in
-                                           NavigationLink(destination: DetailView(user: user)) {
-                                               VStack(alignment: .leading) {
-                                                   Text(user.name)
-                                                       .font(.headline)
-                                                   Text("\(user.isActive ? "Active" : "Inactive")")
-                                                       .foregroundColor(user.isActive ? .green : .red)
-                                                       .font(.caption)
-                                               }
+            VStack {
+                if isLoading {
+                    ProgressView("Loading users...")
+                } else if usersData.isEmpty {
+                    Text("No Users Loaded Yet")
+                        .foregroundColor(.gray)
+                } else {
+                    List(usersData) { user in
+                        NavigationLink(destination: DetailView(user: user)) {
+                            VStack(alignment: .leading) {
+                                Text(user.name)
+                                    .font(.headline)
+                                Text("\(user.isActive ? "Active" : "Inactive")")
+                                    .foregroundColor(user.isActive ? .green : .red)
+                                    .font(.caption)
                             }
                         }
                     }
                 }
-                .navigationTitle("Current Users")
-                .onAppear {
-                    if usersData.isEmpty {
-                        isLoading = true
-                        fetchData()
-                    }
+            }
+            .navigationTitle("Current Users")
+            .onAppear {
+                if usersData.isEmpty {
+                    isLoading = true
+                    fetchData()
                 }
-                .toolbar {
-                    Button("Refresh Data") {
-                        isLoading = true
-                        try? deleteAllExistingData()
-                        fetchData()
-                    }
+            }
+            .toolbar {
+                Button("Refresh Data", systemImage: "arrow.clockwise.circle") {
+                    isLoading = true
+                    try? deleteAllExistingData()
+                    fetchData()
                 }
+            }
         }
-      
     }
-// JSON Decoder,
+
+    // JSON Decoder,
     func fetchData() {
         if !usersData.isEmpty {
             isLoading = false
             return
         }
-        
+
         isLoading = true
-        
+
         guard let url = URL(string: "https://www.hackingwithswift.com/samples/friendface.json") else {
             print("Invalid URL")
             isLoading = false
             return
         }
-        
+
         let session = URLSession(configuration: .default)
         session.dataTask(with: url) { data, _, error in
             if let error = error {
@@ -98,7 +90,7 @@ struct ContentView: View {
                 }
                 return
             }
-            
+
             guard let data = data else {
                 print("No data received")
                 DispatchQueue.main.async {
@@ -106,27 +98,29 @@ struct ContentView: View {
                 }
                 return
             }
-            
+
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = .iso8601
-            
+
             do {
                 let users = try decoder.decode([UserData].self, from: data)
-                
+
                 DispatchQueue.main.async {
                     self.uData = users
                     
                     //  Deleting all existing data first
+
+                    // Delete all existing data first
                     do {
                         try self.deleteAllExistingData()
                     } catch {
                         print("Failed to delete existing data: \(error.localizedDescription)")
                     }
-                    
+
                     // Now add new data
                     for user in users {
                         let friendModels = user.friends.map { FriendModel(id: $0.id, name: $0.name) }
-                        
+
                         let userModel = UserModel(
                             id: user.id,
                             isActive: user.isActive,
@@ -140,10 +134,10 @@ struct ContentView: View {
                             tags: user.tags,
                             friends: friendModels
                         )
-                        
+
                         self.modelContext.insert(userModel)
                     }
-                    
+
                     // Save once after all inserts
                     do {
                         try self.modelContext.save()
@@ -151,7 +145,7 @@ struct ContentView: View {
                     } catch {
                         print("Failed To Save SwiftData: \(error.localizedDescription)")
                     }
-                    
+
                     self.isLoading = false
                 }
             } catch {
@@ -163,14 +157,11 @@ struct ContentView: View {
         }.resume()
     }
 
-    // Helper method to delete all existing data
+    // Removing Exisiting Data.
     func deleteAllExistingData() throws {
         try modelContext.delete(model: UserModel.self, where: #Predicate { _ in true })
         try modelContext.delete(model: FriendModel.self, where: #Predicate { _ in true })
     }
-    
-   
-
 }
 
 #Preview {
